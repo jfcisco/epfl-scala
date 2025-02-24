@@ -1,7 +1,5 @@
 package recfun
 
-import scala.annotation.tailrec
-
 object RecFun extends RecFunInterface:
 
   def main(args: Array[String]): Unit =
@@ -11,10 +9,14 @@ object RecFun extends RecFunInterface:
     //     print(s"${pascal(col, row)} ")
     //   println()
 
-    println("Balance")
-    val example = "(just an) example".toList
-    val isExampleBalanced = balance(example)
-    println(s"Is example balanced? $isExampleBalanced")
+//    println("Balance")
+//    val example = "(just an) example".toList
+//    val isExampleBalanced = balance(example)
+//    println(s"Is example balanced? $isExampleBalanced")
+
+    println("Count Change")
+    val combinations = countChange(9, List(1, 2))
+    println(s"Number of valid combinations: $combinations");
 
   /**
    * Exercise 1
@@ -53,4 +55,11 @@ object RecFun extends RecFunInterface:
   /**
    * Exercise 3
    */
-  def countChange(money: Int, coins: List[Int]): Int = ???
+  // Thanks to `spamegg` for the hint: https://www.coursera.org/learn/scala-functional-programming/discussions/weeks/1/threads/Xky3zcTJEe2Rxw5vmkBsRw/replies/-0u3e8TtEe2Rxw5vmkBsRw
+  def countChange(money: Int, coins: List[Int]): Int =
+    if coins.isEmpty || money < 0 then 0 // Invalid solutions
+    else if money == 0 then 1 // Valid solution
+    else // We can still make change
+      // Either we use coins.head to make change, or
+      // We move to the next denomination in the list
+      countChange(money - coins.head, coins) + countChange(money, coins.tail)
