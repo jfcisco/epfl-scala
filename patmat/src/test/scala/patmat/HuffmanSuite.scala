@@ -46,17 +46,52 @@ class HuffmanSuite extends munit.FunSuite:
       assert(!singleton(List(t1, t2)))
   }
 
-  test("combine of some leaf list (15pts)".ignore) {
+  test("combine of some leaf list (15pts)") {
     val leaflist = List(Leaf('e', 1), Leaf('t', 2), Leaf('x', 4))
     assertEquals(combine(leaflist), List(Fork(Leaf('e',1),Leaf('t',2),List('e', 't'),3), Leaf('x',4)))
   }
 
+  test("createCodeTree success") {
+    val input = "ehe".toList
+    assertEquals(createCodeTree(input),
+      Fork(
+        Leaf('h', 1),
+        Leaf('e', 2),
+        List('h', 'e'),
+        3
+      )
+    )
+  }
 
-  test("decode and encode a very short text should be identity (10pts)".ignore) {
+  test("createCodeTree failure") {
+    interceptMessage[Error]("unable to create code tree") {
+      createCodeTree(Nil)
+    }
+  }
+
+  test("encode: huffman est cool?") {
+    val mySecret = encode(frenchCode)(string2Chars("huffmanestcool"))
+    assertEquals(mySecret, secret)
+  }
+
+  test("decode and encode a very short text should be identity (10pts)") {
     new TestTrees:
       assertEquals(decode(t1, encode(t1)("ab".toList)), "ab".toList)
   }
 
+  test("decode and quick-encode a very short text should be identity (10pts)") {
+    new TestTrees:
+      assertEquals(decode(t1, quickEncode(t1)("ab".toList)), "ab".toList)
+  }
+
+  test("convert to CodeTable") {
+    new TestTrees:
+      assertEquals(convert(t2), List(
+        ('a', List(0, 0)),
+        ('b', List(0, 1)),
+        ('d', List(1))
+      ))
+  }
 
   import scala.concurrent.duration.*
   override val munitTimeout = 10.seconds
