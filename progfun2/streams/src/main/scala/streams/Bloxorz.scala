@@ -43,3 +43,9 @@ object Bloxorz extends App:
         |------ooo-""".stripMargin
 
   println(Level1.solution)
+
+@main
+def test(): Unit =
+  println(Bloxorz.InfiniteLevel.solution)
+
+
