@@ -17,7 +17,7 @@ https://www.coursera.org/specializations/scala
 | Course | Status |
 | - | - |
 | Functional Programming Principles in Scala | 🟢 Done |
-| Functional Program Design in Scala | 🟠 In Progress |
+| Functional Program Design in Scala | 🟢 Done |
 | Parallel Programming | 🔴 Not Started |
 
 ## Notes
